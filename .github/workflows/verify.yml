@@ -6,20 +6,117 @@ on:
   pull_request:
 
 jobs:
-  manifest:
+  manifests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: '24.x'
-      - name: 检查清单与入口
+      - name: Check manifests and sources
         run: |
           set -euo pipefail
-          test -f manifest.json
-          test -f main.mjs
-          test -f hosihikari.mjs
-          test -f MyRpcPlugin.conf
-          node -e "const m=JSON.parse(require('fs').readFileSync('manifest.json','utf8')); if(m.extraInfo.provider!=='rpc') throw new Error('provider'); if(!Array.isArray(JSON.parse(m.extraInfo.command))) throw new Error('command');"
-          node --check main.mjs
-          node --check hosihikari.mjs
+          node - <<'JS'
+          const fs = require('fs');
+
+          const templates = {
+            'node-typescript': {
+              name: 'MyNodePlugin',
+              command: ['node', './hosihikari.mjs', './dist/main.js'],
+              files: ['hosihikari.mjs', 'src/main.ts', 'hosihikari.d.ts', 'tsconfig.json', 'package.json', 'MyNodePlugin.conf'],
+            },
+            python: {
+              name: 'MyPythonPlugin',
+              command: ['python3', './hosihikari.py', './main.py'],
+              files: ['main.py', 'hosihikari.py', 'MyPythonPlugin.conf'],
+            },
+            kotlin: {
+              name: 'MyKotlinPlugin',
+              command: ['java', '-cp', './plugin.jar', 'hosihikari.Binding', 'myplugin.MyKotlinPlugin'],
+              files: ['src/MyKotlinPlugin.kt', 'hosihikari/Binding.java', 'build.sh', 'build.ps1', 'MyKotlinPlugin.conf'],
+            },
+          };
+
+          for (const [dir, expected] of Object.entries(templates)) {
+            const manifest = JSON.parse(fs.readFileSync(`${dir}/manifest.json`, 'utf8'));
+            if (manifest.name !== expected.name) throw new Error(`${dir}: name`);
+            if (manifest.type !== 'hosihikari') throw new Error(`${dir}: type`);
+            if (!manifest.entry) throw new Error(`${dir}: entry`);
+            if (manifest.extraInfo?.provider !== 'rpc') throw new Error(`${dir}: provider`);
+            const command = JSON.parse(manifest.extraInfo.command);
+            if (JSON.stringify(command) !== JSON.stringify(expected.command)) {
+              throw new Error(`${dir}: command ${JSON.stringify(command)}`);
+            }
+            for (const file of expected.files) {
+              if (!fs.existsSync(`${dir}/${file}`)) throw new Error(`${dir}: missing ${file}`);
+            }
+          }
+          JS
+
+  node-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+      - name: Build
+        working-directory: node-typescript
+        run: |
+          npm ci
+          npm run build
+          test -f dist/main.js
+      - name: Handshake
+        working-directory: node-typescript
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          python3 "$GITHUB_WORKSPACE/.github/handshake.py" MyNodePlugin \
+            node ./hosihikari.mjs ./dist/main.js
+          test -f data/loaded.txt
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check syntax
+        working-directory: python
+        run: python3 -m py_compile main.py hosihikari.py
+      - name: Handshake
+        working-directory: python
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          python3 "$GITHUB_WORKSPACE/.github/handshake.py" MyPythonPlugin \
+            python3 ./hosihikari.py ./main.py
+          test -f data/loaded.txt
+
+  kotlin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: graalvm-community
+          java-version: '25'
+      - name: Install Kotlin compiler
+        run: |
+          set -euo pipefail
+          curl -fsSL -o "$RUNNER_TEMP/kotlin.zip" \
+            https://github.com/JetBrains/kotlin/releases/download/v2.4.21/kotlin-compiler-2.4.21.zip
+          unzip -q "$RUNNER_TEMP/kotlin.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/kotlinc/bin" >> "$GITHUB_PATH"
+      - name: Build
+        working-directory: kotlin
+        run: |
+          ./build.sh
+          test -f plugin.jar
+          unzip -l plugin.jar | grep -q 'hosihikari/Binding.class'
+      - name: Handshake
+        working-directory: kotlin
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          python3 "$GITHUB_WORKSPACE/.github/handshake.py" MyKotlinPlugin \
+            java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin
+          test -f data/loaded.txt

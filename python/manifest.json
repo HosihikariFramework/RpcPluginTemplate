@@ -1,6 +1,6 @@
 {
-  "name": "MyRpcPlugin",
-  "entry": "main.mjs",
+  "name": "MyPythonPlugin",
+  "entry": "main.py",
   "type": "hosihikari",
   "version": "1.0.0",
   "dependencies": [
@@ -11,6 +11,6 @@
     "api": "2",
     "format_version": "1",
     "provider": "rpc",
-    "command": "[\"node\", \"./hosihikari.mjs\", \"./main.mjs\"]"
+    "command": "[\"python3\", \"./hosihikari.py\", \"./main.py\"]"
   }
 }

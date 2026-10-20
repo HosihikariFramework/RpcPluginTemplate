@@ -1,0 +1,16 @@
+{
+  "name": "MyNodePlugin",
+  "entry": "dist/main.js",
+  "type": "hosihikari",
+  "version": "1.0.0",
+  "dependencies": [
+    { "name": "hosihikari" },
+    { "name": "hosihikari-rpc" }
+  ],
+  "extraInfo": {
+    "api": "2",
+    "format_version": "1",
+    "provider": "rpc",
+    "command": "[\"node\", \"./hosihikari.mjs\", \"./dist/main.js\"]"
+  }
+}
