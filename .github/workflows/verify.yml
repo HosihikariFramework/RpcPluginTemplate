@@ -1,0 +1,25 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+      - name: 检查清单与入口
+        run: |
+          set -euo pipefail
+          test -f manifest.json
+          test -f main.mjs
+          test -f hosihikari.mjs
+          test -f MyRpcPlugin.conf
+          node -e "const m=JSON.parse(require('fs').readFileSync('manifest.json','utf8')); if(m.extraInfo.provider!=='rpc') throw new Error('provider'); if(!Array.isArray(JSON.parse(m.extraInfo.command))) throw new Error('command');"
+          node --check main.mjs
+          node --check hosihikari.mjs
