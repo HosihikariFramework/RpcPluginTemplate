@@ -54,3 +54,7 @@ stderr, and plugins should use `ctx.logInfo` / `ctx.logWarn` / `ctx.logError` fo
 The context exposes the data directory, package directory, configuration lookup, data writes,
 event publishing/subscribing, and timers. See the
 [out-of-process guide](https://hosihikariframework.github.io/authoring-rpc/).
+
+## Licence
+
+MIT-0, see [LICENSE.md](LICENSE.md).

@@ -59,3 +59,7 @@ Windows 上：
 `logInfo` / `logWarn` / `logError`、`writeData(file, text)`、`publish(topic, json)`、
 `subscribe(topic, handler[, sync])`、`runLater(millis, work)` 与 `runEvery(millis, work)`。见
 [进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+
+## 许可
+
+MIT-0，见 [LICENSE.md](LICENSE.md)。

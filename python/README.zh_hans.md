@@ -43,3 +43,7 @@ stdio 通信；卸载就是让子进程退出。
 `log_info` / `log_warn` / `log_error`、`write_data(file, text)`、`publish(topic, json)`、
 `subscribe(topic, fn, sync=False)`、`run_later(seconds, fn)` 与 `run_every(seconds, fn)`。见
 [进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+
+## 许可
+
+MIT-0，见 [LICENSE.md](LICENSE.md)。

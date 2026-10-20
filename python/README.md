@@ -43,3 +43,7 @@ The context exposes `name`, `data_directory`, `package_directory`, `config(key)`
 `log_info` / `log_warn` / `log_error`, `write_data(file, text)`, `publish(topic, json)`,
 `subscribe(topic, fn, sync=False)`, `run_later(seconds, fn)` and `run_every(seconds, fn)`. See the
 [out-of-process guide](https://hosihikariframework.github.io/authoring-rpc/).
+
+## Licence
+
+MIT-0, see [LICENSE.md](LICENSE.md).

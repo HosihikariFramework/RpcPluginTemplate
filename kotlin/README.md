@@ -60,3 +60,7 @@ Hooks return `HookResult.allow()` or `HookResult.refuse(reason)`. `Context` prov
 `logInfo` / `logWarn` / `logError`, `writeData(file, text)`, `publish(topic, json)`,
 `subscribe(topic, handler[, sync])`, `runLater(millis, work)` and `runEvery(millis, work)`. See the
 [out-of-process guide](https://hosihikariframework.github.io/authoring-rpc/).
+
+## Licence
+
+MIT-0, see [LICENSE.md](LICENSE.md).

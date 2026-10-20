@@ -35,3 +35,7 @@
 绑定独占 stdout，只走 JSON-RPC 帧；stderr 是文本日志。插件日志请用上下文提供的日志方法。
 上下文提供数据目录、包目录、配置读取、数据写入、事件发布/订阅与定时器。见
 [进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+
+## 许可
+
+MIT-0，见 [LICENSE.md](LICENSE.md)。
