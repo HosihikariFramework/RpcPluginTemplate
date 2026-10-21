@@ -32,6 +32,7 @@ For the self-hosted Linux carrier, install the suffix-less shim package and star
   `on_unload(ctx)` are the hooks.
 - `hosihikari.py` — the Python binding copied from RpcProvider's `bindings/python/`. Refresh it when
   the provider is upgraded.
+- `hosihikari.pyi` — type stubs for the binding; keep it beside `hosihikari.py`.
 - `MyPythonPlugin.conf` — package defaults.
 
 ## Protocol

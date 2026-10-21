@@ -32,6 +32,7 @@ stdio 通信；卸载就是让子进程退出。
   `on_unload(ctx)` 就是钩子。
 - `hosihikari.py` —— 从 RpcProvider 的 `bindings/python/` 拷来的 Python 绑定；升级 Provider 时
   同步更新。
+- `hosihikari.pyi` —— 绑定的类型存根，与 `hosihikari.py` 放在一起。
 - `MyPythonPlugin.conf` —— 包内默认配置。
 
 ## 协议
