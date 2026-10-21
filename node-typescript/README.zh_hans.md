@@ -26,7 +26,7 @@ npm run build
 3. 构建后按服务端安装 Shim 变体与 RPC Provider，再重启：
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone / #endstone_linux
+   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 

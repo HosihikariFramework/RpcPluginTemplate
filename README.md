@@ -21,7 +21,7 @@ configuration, and README.
    the RPC provider:
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone / #endstone_linux
+   lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 

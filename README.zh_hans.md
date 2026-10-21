@@ -18,7 +18,7 @@
 3. 需要构建的运行时先构建，然后按服务端安装 Shim 变体与 RPC Provider：
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone / #endstone_linux
+   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 

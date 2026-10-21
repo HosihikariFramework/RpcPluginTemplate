@@ -17,7 +17,7 @@ stdio 通信；卸载就是让子进程退出。
 3. 按服务端安装 Shim 变体与 RPC Provider，再重启：
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone / #endstone_linux
+   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 
