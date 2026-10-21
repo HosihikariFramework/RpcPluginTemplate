@@ -17,8 +17,8 @@ Python 3.8 or newer on `PATH`. The manifest command uses `python3`; on Windows c
 3. Install the shim variant for the server and the RPC loader, then restart:
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcProvider
+   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
+   lip install github.com/HosihikariFramework/RpcLoader
    ```
 
 For the self-hosted Linux carrier, install the suffix-less shim package and start the server through

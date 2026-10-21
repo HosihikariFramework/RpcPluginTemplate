@@ -60,7 +60,7 @@ jobs:
       - name: RpcProvider
         uses: actions/checkout@v7
         with:
-          repository: HosihikariFramework/RpcProvider
+          repository: HosihikariFramework/RpcLoader
           path: RpcProvider
       - name: Compare binding copies
         run: |

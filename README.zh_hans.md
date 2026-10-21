@@ -18,8 +18,8 @@
 3. 需要构建的运行时先构建，然后按服务端安装 Shim 变体与 RPC Loader：
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
-   lip install github.com/HosihikariFramework/RpcProvider
+   lip install github.com/HosihikariFramework/HostingShim#levilamina   # 或 #endstone
+   lip install github.com/HosihikariFramework/RpcLoader
    ```
 
 4. 重启服务端。Loader 会在包目录里启动清单中的命令。

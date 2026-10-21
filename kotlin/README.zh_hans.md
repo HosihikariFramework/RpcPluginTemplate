@@ -32,8 +32,8 @@ Windows 上：
 3. 构建后按服务端安装 Shim 变体与 RPC Loader，再重启：
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
-   lip install github.com/HosihikariFramework/RpcProvider
+   lip install github.com/HosihikariFramework/HostingShim#levilamina   # 或 #endstone
+   lip install github.com/HosihikariFramework/RpcLoader
    ```
 
 自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；加载器与插件仍然放在

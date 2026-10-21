@@ -33,8 +33,8 @@ binding classes to `plugin.jar`. `plugin.jar` is the only artifact the server ne
 3. Build, install the shim variant for the server and the RPC loader, and restart:
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcProvider
+   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
+   lip install github.com/HosihikariFramework/RpcLoader
    ```
 
 For the self-hosted Linux carrier, install the suffix-less shim package and start the server through

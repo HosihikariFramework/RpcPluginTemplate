@@ -21,8 +21,8 @@ configuration, and README.
    the RPC loader:
 
    ```powershell
-   lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcProvider
+   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
+   lip install github.com/HosihikariFramework/RpcLoader
    ```
 
 4. Restart the server. The loader starts the command from the package directory.
