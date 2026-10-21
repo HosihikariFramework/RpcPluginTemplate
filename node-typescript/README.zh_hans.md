@@ -1,6 +1,6 @@
 # RPC 插件模板 —— Node.js/TypeScript 运行时
 
-星光框架的最小进程外 Node 插件，用 TypeScript 编写。RpcProvider 启动清单里的命令，通过行分隔
+星光框架的最小进程外 Node 插件，用 TypeScript 编写。RpcLoader 启动清单里的命令，通过行分隔
 JSON-RPC 2.0 over stdio 通信；卸载就是让子进程退出。
 
 ## 要求
@@ -23,23 +23,23 @@ npm run build
    `name` 一致。
 2. 改 `manifest.json` 的 `name`，把 `MyNodePlugin.conf` 改成同名；调整布局时同步修改入口或
    `extraInfo.command`。
-3. 构建后按服务端安装 Shim 变体与 RPC Provider，再重启：
+3. 构建后按服务端安装 Shim 变体与 RPC Loader，再重启：
 
    ```powershell
    lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 
-自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；Provider 与插件仍然放在
+自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；加载器与插件仍然放在
 `plugins/` 下。
 
 ## 文件
 
-- `manifest.json` —— `provider: rpc`；`command` 是编码成字符串的 JSON 数组
+- `manifest.json` —— `loader: rpc`；`command` 是编码成字符串的 JSON 数组
   （`node ./hosihikari.mjs ./dist/main.js`）。
 - `src/main.ts` —— 插件本体；默认导出实现各钩子。
 - `hosihikari.d.ts` —— 绑定的上下文与钩子类型。
-- `hosihikari.mjs` —— 从 RpcProvider 的 `bindings/node/` 拷来的 Node 绑定；升级 Provider 时
+- `hosihikari.mjs` —— 从 RpcLoader 的 `bindings/node/` 拷来的 Node 绑定；升级 Loader 时
   同步更新。
 - `tsconfig.json`、`package.json` —— TypeScript 构建配置。
 - `MyNodePlugin.conf` —— 包内默认配置。

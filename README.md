@@ -1,6 +1,6 @@
 # RpcPluginTemplate — RPC plugin templates
 
-Out-of-process plugin templates for the Hosihikari framework. RpcProvider starts the command from
+Out-of-process plugin templates for the Hosihikari framework. RpcLoader starts the command from
 `manifest.json` and speaks line-delimited JSON-RPC 2.0 over stdio; unloading means the child process
 exits. Each directory is a complete plugin package with its own manifest, binding copy,
 configuration, and README.
@@ -18,20 +18,20 @@ configuration, and README.
 2. Rename the plugin in `manifest.json`, rename the `.conf` file to match, and adjust the entry or
    `extraInfo.command` when you change the layout.
 3. Build the plugin where the runtime requires it, then install the shim variant for the server and
-   the RPC provider:
+   the RPC loader:
 
    ```powershell
    lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 
-4. Restart the server. The provider starts the command from the package directory.
+4. Restart the server. The loader starts the command from the package directory.
 
 For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; providers and plugins still live under `plugins/`.
+`hosihikari-server`; loaders and plugins still live under `plugins/`.
 
 The bindings under `node-typescript/hosihikari.mjs`, `python/hosihikari.py`, and `kotlin/hosihikari/`
-are copied from RpcProvider. Refresh them when the provider is upgraded.
+are copied from RpcLoader. Refresh them when the loader is upgraded.
 
 ## Protocol
 

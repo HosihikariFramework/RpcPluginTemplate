@@ -1,6 +1,6 @@
 # RPC plugin template — Node.js/TypeScript runtime
 
-A minimal out-of-process Node plugin written in TypeScript. RpcProvider starts the command from
+A minimal out-of-process Node plugin written in TypeScript. RpcLoader starts the command from
 `manifest.json` and speaks line-delimited JSON-RPC 2.0 over stdio; unloading means the child process
 exits.
 
@@ -25,7 +25,7 @@ type-checks without emitting.
    `manifest.json` `name`.
 2. Change `manifest.json` `name`, rename `MyNodePlugin.conf` to match, and update the entry or
    `extraInfo.command` if the layout changes.
-3. Build, install the shim variant for the server and the RPC provider, and restart:
+3. Build, install the shim variant for the server and the RPC loader, and restart:
 
    ```powershell
    lip install github.com/HosihikariFramework/Shim#levilamina   # or #endstone
@@ -33,16 +33,16 @@ type-checks without emitting.
    ```
 
 For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; providers and plugins still live under `plugins/`.
+`hosihikari-server`; loaders and plugins still live under `plugins/`.
 
 ## Files
 
-- `manifest.json` — `provider: rpc`; `command` is a JSON array encoded as a string
+- `manifest.json` — `loader: rpc`; `command` is a JSON array encoded as a string
   (`node ./hosihikari.mjs ./dist/main.js`).
 - `src/main.ts` — the plugin; the default export implements the hooks.
 - `hosihikari.d.ts` — context and hook types for the binding.
-- `hosihikari.mjs` — the Node binding copied from RpcProvider's `bindings/node/`. Refresh it when
-  the provider is upgraded.
+- `hosihikari.mjs` — the Node binding copied from RpcLoader's `bindings/node/`. Refresh it when
+  the loader is upgraded.
 - `tsconfig.json`, `package.json` — TypeScript build configuration.
 - `MyNodePlugin.conf` — package defaults.
 

@@ -42,7 +42,7 @@ jobs:
             if (manifest.name !== expected.name) throw new Error(`${dir}: name`);
             if (manifest.type !== 'hosihikari') throw new Error(`${dir}: type`);
             if (!manifest.entry) throw new Error(`${dir}: entry`);
-            if (manifest.extraInfo?.provider !== 'rpc') throw new Error(`${dir}: provider`);
+            if (manifest.extraInfo?.loader !== 'rpc') throw new Error(`${dir}: loader`);
             const command = JSON.parse(manifest.extraInfo.command);
             if (JSON.stringify(command) !== JSON.stringify(expected.command)) {
               throw new Error(`${dir}: command ${JSON.stringify(command)}`);

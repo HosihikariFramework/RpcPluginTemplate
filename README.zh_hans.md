@@ -1,6 +1,6 @@
 # RpcPluginTemplate —— RPC 插件模板
 
-星光框架的进程外插件模板。RpcProvider 启动清单里的命令，通过行分隔 JSON-RPC 2.0 over stdio
+星光框架的进程外插件模板。RpcLoader 启动清单里的命令，通过行分隔 JSON-RPC 2.0 over stdio
 通信；卸载就是让子进程退出。每个目录都是一个完整的插件包，自带清单、绑定副本、配置与说明。
 
 ## 模板
@@ -15,20 +15,20 @@
    里的 `name` 一致。
 2. 改 `manifest.json` 的 `name`，把 `.conf` 文件改成同名；调整布局时同步修改入口或
    `extraInfo.command`。
-3. 需要构建的运行时先构建，然后按服务端安装 Shim 变体与 RPC Provider：
+3. 需要构建的运行时先构建，然后按服务端安装 Shim 变体与 RPC Loader：
 
    ```powershell
    lip install github.com/HosihikariFramework/Shim#levilamina   # 或 #endstone
    lip install github.com/HosihikariFramework/RpcProvider
    ```
 
-4. 重启服务端。Provider 会在包目录里启动清单中的命令。
+4. 重启服务端。Loader 会在包目录里启动清单中的命令。
 
-自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；Provider 与插件仍然放在
+自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；加载器与插件仍然放在
 `plugins/` 下。
 
-各模板中的 `hosihikari.mjs`、`hosihikari.py`、`hosihikari/` 来自 RpcProvider 的绑定目录；
-升级 Provider 时同步更新。
+各模板中的 `hosihikari.mjs`、`hosihikari.py`、`hosihikari/` 来自 RpcLoader 的绑定目录；
+升级 Loader 时同步更新。
 
 ## 协议
 
