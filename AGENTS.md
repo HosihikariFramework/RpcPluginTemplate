@@ -14,9 +14,9 @@ Kotlin/JVM packages that speak line-delimited JSON-RPC 2.0 over stdio.
 ## Build and verify
 
 ```bash
-cd node-typescript && npm ci && npm run build
+(cd node-typescript && npm ci && npm run build)
 python3 -m py_compile python/main.py python/hosihikari.py
-cd kotlin && ./build.sh
+(cd kotlin && ./build.sh)
 ```
 
 Each directory is a complete plugin package. Copy it to `plugins/<PluginName>/`, keep the directory
