@@ -57,19 +57,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: RpcProvider
+      - name: RpcLoader
         uses: actions/checkout@v7
         with:
           repository: HosihikariFramework/RpcLoader
-          path: RpcProvider
+          path: RpcLoader
       - name: Compare binding copies
         run: |
           set -euo pipefail
-          diff -u RpcProvider/bindings/node/hosihikari.mjs node-typescript/hosihikari.mjs
-          diff -u RpcProvider/bindings/node/hosihikari.d.ts node-typescript/hosihikari.d.ts
-          diff -u RpcProvider/bindings/python/hosihikari.py python/hosihikari.py
-          diff -u RpcProvider/bindings/python/hosihikari.pyi python/hosihikari.pyi
-          diff -ru RpcProvider/bindings/java/hosihikari kotlin/hosihikari
+          diff -u RpcLoader/bindings/node/hosihikari.mjs node-typescript/hosihikari.mjs
+          diff -u RpcLoader/bindings/node/hosihikari.d.ts node-typescript/hosihikari.d.ts
+          diff -u RpcLoader/bindings/python/hosihikari.py python/hosihikari.py
+          diff -u RpcLoader/bindings/python/hosihikari.pyi python/hosihikari.pyi
+          diff -ru RpcLoader/bindings/java/hosihikari kotlin/hosihikari
 
   node-typescript:
     runs-on: ubuntu-latest
