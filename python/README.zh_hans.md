@@ -43,7 +43,7 @@ stdio 通信；卸载就是让子进程退出。
 上下文提供 `name`、`data_directory`、`package_directory`、`config(key)`、`config_object`、
 `log_info` / `log_warn` / `log_error`、`write_data(file, text)`、`publish(topic, json)`、
 `subscribe(topic, fn, sync=False)`、`schedule_once(seconds, fn)` 与 `schedule_periodic(seconds, fn)`。见
-[进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+[进程外文档](https://hf.srcz.one/zh/develop/authoring-rpc/)。
 
 ## 许可
 

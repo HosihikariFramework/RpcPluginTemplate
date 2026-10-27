@@ -43,7 +43,7 @@ should use `ctx.log_info` / `ctx.log_warn` / `ctx.log_error` for logging.
 The context exposes `name`, `data_directory`, `package_directory`, `config(key)`, `config_object`,
 `log_info` / `log_warn` / `log_error`, `write_data(file, text)`, `publish(topic, json)`,
 `subscribe(topic, fn, sync=False)`, `schedule_once(seconds, fn)` and `schedule_periodic(seconds, fn)`. See the
-[out-of-process guide](https://hosihikariframework.github.io/authoring-rpc/).
+[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
 
 ## Licence
 

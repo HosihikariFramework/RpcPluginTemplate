@@ -38,7 +38,7 @@ are copied from RpcLoader. Refresh them when the loader is upgraded.
 The binding owns stdout: it carries only JSON-RPC frames, while stderr is text logging. Plugins use
 the context logging methods. The context exposes the data directory, package directory,
 configuration lookup, data writes, event publishing/subscribing, and timers. See the
-[out-of-process guide](https://hosihikariframework.github.io/authoring-rpc/).
+[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
 
 ## Licence
 

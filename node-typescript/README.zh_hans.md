@@ -50,7 +50,7 @@ npm run build
 `ctx.logInfo` / `ctx.logWarn` / `ctx.logError`。
 
 上下文提供数据目录、包目录、配置读取、数据写入、事件发布/订阅与定时器。见
-[进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+[进程外文档](https://hf.srcz.one/zh/develop/authoring-rpc/)。
 
 ## 许可
 
