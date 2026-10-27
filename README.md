@@ -30,7 +30,7 @@ configuration, and README.
 For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
 `hosihikari-server`; loaders and plugins still live under `plugins/`.
 
-The bindings under `node-typescript/hosihikari.mjs`, `python/hosihikari.py`, and `kotlin/hosihikari/`
+The protocol definitions under `node-typescript/hosihikari.mjs`, `python/hosihikari.py`, and `kotlin/hosihikari/`
 are copied from RpcLoader. Refresh them when the loader is upgraded.
 
 ## Protocol

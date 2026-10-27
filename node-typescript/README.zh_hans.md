@@ -39,7 +39,7 @@ npm run build
   （`node ./hosihikari.mjs ./dist/main.js`）。
 - `src/main.ts` —— 插件本体；默认导出实现各钩子。
 - `hosihikari.d.ts` —— 绑定的上下文与钩子类型。
-- `hosihikari.mjs` —— 从 RpcLoader 的 `bindings/node/` 拷来的 Node 绑定；升级 Loader 时
+- `hosihikari.mjs` —— 从 RpcLoader 的 `protocol/node/` 拷来的 Node 协议定义；升级 Loader 时
   同步更新。
 - `tsconfig.json`、`package.json` —— TypeScript 构建配置。
 - `MyNodePlugin.conf` —— 包内默认配置。

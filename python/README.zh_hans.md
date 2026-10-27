@@ -30,7 +30,7 @@ stdio 通信；卸载就是让子进程退出。
   （`python3 ./hosihikari.py ./main.py`）。
 - `main.py` —— 插件本体；模块级的 `on_load(ctx)`、`on_enable(ctx)`、`on_disable(ctx)` 与
   `on_unload(ctx)` 就是钩子。
-- `hosihikari.py` —— 从 RpcLoader 的 `bindings/python/` 拷来的 Python 绑定；升级 Loader 时
+- `hosihikari.py` —— 从 RpcLoader 的 `protocol/python/` 拷来的 Python 协议定义；升级 Loader 时
   同步更新。
 - `hosihikari.pyi` —— 绑定的类型存根，与 `hosihikari.py` 放在一起。
 - `MyPythonPlugin.conf` —— 包内默认配置。

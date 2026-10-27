@@ -45,7 +45,7 @@ For the self-hosted Linux carrier, install the suffix-less shim package and star
 - `manifest.json` — `loader: rpc`; `command` is a JSON array encoded as a string
   (`java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin`).
 - `src/MyKotlinPlugin.kt` — the plugin; it implements `hosihikari.Plugin`.
-- `hosihikari/` — the Java binding copied from RpcLoader's `bindings/java/hosihikari/`. Refresh it
+- `hosihikari/` — the Java binding copied from RpcLoader's `protocol/java/hosihikari/`. Refresh it
   when the loader is upgraded.
 - `build.sh`, `build.ps1` — build scripts.
 - `MyKotlinPlugin.conf` — package defaults.

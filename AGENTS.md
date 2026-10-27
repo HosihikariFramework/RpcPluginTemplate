@@ -24,7 +24,7 @@ name equal to the manifest `name`, and install `RpcLoader`.
 
 ## Invariants
 
-- Binding copies must match `RpcLoader/bindings/` byte for byte; the verify workflow diffs them.
+- Protocol-definition copies must match `RpcLoader/protocol/` byte for byte; the verify workflow diffs them.
 - Manifest `extraInfo.command` is an argument list, never a shell string.
 - Under Endstone, use an absolute runtime path; the CLI replaces the child `PATH`.
 - Keep the three runtime directories behaviorally equivalent.
