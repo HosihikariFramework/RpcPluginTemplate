@@ -58,7 +58,7 @@ Windows 上：
 `dataDirectory()`、`packageDirectory()`、`config(key)`、`configObject()`、
 `logInfo` / `logWarn` / `logError`、`writeData(file, text)`、`publish(topic, json)`、
 `subscribe(topic, handler[, sync])`、`scheduleOnce(millis, work)` 与 `schedulePeriodic(millis, work)`。见
-[进程外文档](https://hosihikariframework.github.io/zh/authoring-rpc/)。
+[进程外文档](https://hf.srcz.one/zh/develop/authoring-rpc/)。
 
 ## 许可
 

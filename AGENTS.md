@@ -32,5 +32,5 @@ name equal to the manifest `name`, and install `RpcLoader`.
 
 ## Context
 
-- [Out-of-process guide](https://hf.srcz.one/authoring-rpc/).
+- [Out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
 - [RpcLoader](https://github.com/HosihikariFramework/RpcLoader).
