@@ -65,11 +65,11 @@ jobs:
       - name: Compare binding copies
         run: |
           set -euo pipefail
-          diff -u RpcLoader/bindings/node/hosihikari.mjs node-typescript/hosihikari.mjs
-          diff -u RpcLoader/bindings/node/hosihikari.d.ts node-typescript/hosihikari.d.ts
-          diff -u RpcLoader/bindings/python/hosihikari.py python/hosihikari.py
-          diff -u RpcLoader/bindings/python/hosihikari.pyi python/hosihikari.pyi
-          diff -ru RpcLoader/bindings/java/hosihikari kotlin/hosihikari
+          diff -u RpcLoader/protocol/node/hosihikari.mjs node-typescript/hosihikari.mjs
+          diff -u RpcLoader/protocol/node/hosihikari.d.ts node-typescript/hosihikari.d.ts
+          diff -u RpcLoader/protocol/python/hosihikari.py python/hosihikari.py
+          diff -u RpcLoader/protocol/python/hosihikari.pyi python/hosihikari.pyi
+          diff -ru RpcLoader/protocol/java/hosihikari kotlin/hosihikari
 
   node-typescript:
     runs-on: ubuntu-latest

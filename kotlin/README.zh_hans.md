@@ -44,7 +44,7 @@ Windows 上：
 - `manifest.json` —— `loader: rpc`；`command` 是编码成字符串的 JSON 数组
   （`java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin`）。
 - `src/MyKotlinPlugin.kt` —— 插件本体；实现 `hosihikari.Plugin`。
-- `hosihikari/` —— 从 RpcLoader 的 `bindings/java/hosihikari/` 拷来的 Java 绑定；升级
+- `hosihikari/` —— 从 RpcLoader 的 `protocol/java/hosihikari/` 拷来的 Java 协议定义；升级
   Loader 时同步更新。
 - `build.sh`、`build.ps1` —— 构建脚本。
 - `MyKotlinPlugin.conf` —— 包内默认配置。

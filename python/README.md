@@ -30,7 +30,7 @@ For the self-hosted Linux carrier, install the suffix-less shim package and star
   (`python3 ./hosihikari.py ./main.py`).
 - `main.py` — the plugin; module-level `on_load(ctx)`, `on_enable(ctx)`, `on_disable(ctx)` and
   `on_unload(ctx)` are the hooks.
-- `hosihikari.py` — the Python binding copied from RpcLoader's `bindings/python/`. Refresh it when
+- `hosihikari.py` — the Python binding copied from RpcLoader's `protocol/python/`. Refresh it when
   the loader is upgraded.
 - `hosihikari.pyi` — type stubs for the binding; keep it beside `hosihikari.py`.
 - `MyPythonPlugin.conf` — package defaults.

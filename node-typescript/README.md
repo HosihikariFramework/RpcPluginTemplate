@@ -41,7 +41,7 @@ For the self-hosted Linux carrier, install the suffix-less shim package and star
   (`node ./hosihikari.mjs ./dist/main.js`).
 - `src/main.ts` — the plugin; the default export implements the hooks.
 - `hosihikari.d.ts` — context and hook types for the binding.
-- `hosihikari.mjs` — the Node binding copied from RpcLoader's `bindings/node/`. Refresh it when
+- `hosihikari.mjs` — the Node binding copied from RpcLoader's `protocol/node/`. Refresh it when
   the loader is upgraded.
 - `tsconfig.json`, `package.json` — TypeScript build configuration.
 - `MyNodePlugin.conf` — package defaults.
