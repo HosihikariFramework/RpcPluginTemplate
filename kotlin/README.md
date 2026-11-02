@@ -30,15 +30,17 @@ binding classes to `plugin.jar`. `plugin.jar` is the only artifact the server ne
    `manifest.json` `name`.
 2. Change `manifest.json` `name`, rename `MyKotlinPlugin.conf` to match, and update the entry or
    `extraInfo.command` if the layout changes, including the plugin class in the command.
-3. Build, install the shim variant for the server and the RPC loader, and restart:
+3. Build, install the carrier bundle and the RPC loader with Seiko, and restart:
 
    ```powershell
-   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcLoader
+   sk init                                  # once per server root
+   sk add hosihikari-hosting-levilamina     # LeviLamina
+   # or: sk add hosihikari-hosting-endstone
+   # or: sk add hosihikari-hosting-selfhosted
+   sk add hosihikari-rpc
    ```
 
-For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; loaders and plugins still live under `plugins/`.
+For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Windows or Linux; start the server through `hosihikari-server` (`hosihikari-server.exe` on Windows). Loaders and plugins still live under `plugins/`.
 
 ## Files
 
@@ -59,7 +61,7 @@ Hooks return `HookResult.allow()` or `HookResult.refuse(reason)`. `Context` prov
 `dataDirectory()`, `packageDirectory()`, `config(key)`, `configObject()`,
 `logInfo` / `logWarn` / `logError`, `writeData(file, text)`, `publish(topic, json)`,
 `subscribe(topic, handler[, sync])`, `scheduleOnce(millis, work)` and `schedulePeriodic(millis, work)`. See the
-[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
+[out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).
 
 ## Licence
 
