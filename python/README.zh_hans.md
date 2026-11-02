@@ -14,15 +14,17 @@ stdio 通信；卸载就是让子进程退出。
    `name` 一致。
 2. 改 `manifest.json` 的 `name`，把 `MyPythonPlugin.conf` 改成同名；调整布局时同步修改入口或
    `extraInfo.command`。
-3. 按服务端安装 Shim 变体与 RPC Loader，再重启：
+3. 用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
 
    ```powershell
-   lip install github.com/HosihikariFramework/HostingShim#levilamina   # 或 #endstone
-   lip install github.com/HosihikariFramework/RpcLoader
+   sk init                                  # 每个服务端根目录执行一次
+   sk add hosihikari-hosting-levilamina     # LeviLamina
+   # 或：sk add hosihikari-hosting-endstone
+   # 或：sk add hosihikari-hosting-selfhosted
+   sk add hosihikari-rpc
    ```
 
-自持态 Linux 用无后缀 Shim 包，并通过 `hosihikari-server` 启动；加载器与插件仍然放在
-`plugins/` 下。
+自持态载体用 `sk add hosihikari-hosting-selfhosted`，按平台选 Windows 或 Linux；通过 `hosihikari-server`（Windows 上是 `hosihikari-server.exe`）启动。加载器与插件仍然放在 `plugins/` 下。
 
 ## 文件
 
@@ -43,7 +45,7 @@ stdio 通信；卸载就是让子进程退出。
 上下文提供 `name`、`data_directory`、`package_directory`、`config(key)`、`config_object`、
 `log_info` / `log_warn` / `log_error`、`write_data(file, text)`、`publish(topic, json)`、
 `subscribe(topic, fn, sync=False)`、`schedule_once(seconds, fn)` 与 `schedule_periodic(seconds, fn)`。见
-[进程外文档](https://hf.srcz.one/zh/develop/authoring-rpc/)。
+[进程外文档](https://hoshi.srcz.one/zh/framework/develop/authoring-rpc/)。
 
 ## 许可
 

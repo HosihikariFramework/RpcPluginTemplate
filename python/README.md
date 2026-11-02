@@ -14,15 +14,17 @@ Python 3.8 or newer on `PATH`. The manifest command uses `python3`; on Windows c
    `manifest.json` `name`.
 2. Change `manifest.json` `name`, rename `MyPythonPlugin.conf` to match, and update the entry or
    `extraInfo.command` if the layout changes.
-3. Install the shim variant for the server and the RPC loader, then restart:
+3. Install the carrier bundle and the RPC loader with Seiko, then restart:
 
    ```powershell
-   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcLoader
+   sk init                                  # once per server root
+   sk add hosihikari-hosting-levilamina     # LeviLamina
+   # or: sk add hosihikari-hosting-endstone
+   # or: sk add hosihikari-hosting-selfhosted
+   sk add hosihikari-rpc
    ```
 
-For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; loaders and plugins still live under `plugins/`.
+For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Windows or Linux; start the server through `hosihikari-server` (`hosihikari-server.exe` on Windows). Loaders and plugins still live under `plugins/`.
 
 ## Files
 
@@ -43,7 +45,7 @@ should use `ctx.log_info` / `ctx.log_warn` / `ctx.log_error` for logging.
 The context exposes `name`, `data_directory`, `package_directory`, `config(key)`, `config_object`,
 `log_info` / `log_warn` / `log_error`, `write_data(file, text)`, `publish(topic, json)`,
 `subscribe(topic, fn, sync=False)`, `schedule_once(seconds, fn)` and `schedule_periodic(seconds, fn)`. See the
-[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
+[out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).
 
 ## Licence
 

@@ -25,15 +25,17 @@ type-checks without emitting.
    `manifest.json` `name`.
 2. Change `manifest.json` `name`, rename `MyNodePlugin.conf` to match, and update the entry or
    `extraInfo.command` if the layout changes.
-3. Build, install the shim variant for the server and the RPC loader, and restart:
+3. Build, install the carrier bundle and the RPC loader with Seiko, and restart:
 
    ```powershell
-   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcLoader
+   sk init                                  # once per server root
+   sk add hosihikari-hosting-levilamina     # LeviLamina
+   # or: sk add hosihikari-hosting-endstone
+   # or: sk add hosihikari-hosting-selfhosted
+   sk add hosihikari-rpc
    ```
 
-For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; loaders and plugins still live under `plugins/`.
+For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Windows or Linux; start the server through `hosihikari-server` (`hosihikari-server.exe` on Windows). Loaders and plugins still live under `plugins/`.
 
 ## Files
 
@@ -53,7 +55,7 @@ stderr, and plugins should use `ctx.logInfo` / `ctx.logWarn` / `ctx.logError` fo
 
 The context exposes the data directory, package directory, configuration lookup, data writes,
 event publishing/subscribing, and timers. See the
-[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
+[out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).
 
 ## Licence
 

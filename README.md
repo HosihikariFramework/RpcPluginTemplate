@@ -17,18 +17,20 @@ configuration, and README.
    match `name` in `manifest.json`.
 2. Rename the plugin in `manifest.json`, rename the `.conf` file to match, and adjust the entry or
    `extraInfo.command` when you change the layout.
-3. Build the plugin where the runtime requires it, then install the shim variant for the server and
-   the RPC loader:
+3. Build the plugin where the runtime requires it, then install the carrier bundle and the
+   RPC loader with Seiko:
 
    ```powershell
-   lip install github.com/HosihikariFramework/HostingShim#levilamina   # or #endstone
-   lip install github.com/HosihikariFramework/RpcLoader
+   sk init                                  # once per server root
+   sk add hosihikari-hosting-levilamina     # LeviLamina
+   # or: sk add hosihikari-hosting-endstone
+   # or: sk add hosihikari-hosting-selfhosted
+   sk add hosihikari-rpc
    ```
 
 4. Restart the server. The loader starts the command from the package directory.
 
-For the self-hosted Linux carrier, install the suffix-less shim package and start the server through
-`hosihikari-server`; loaders and plugins still live under `plugins/`.
+For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Windows or Linux; start the server through `hosihikari-server` (`hosihikari-server.exe` on Windows). Loaders and plugins still live under `plugins/`.
 
 The protocol definitions under `node-typescript/hosihikari.mjs`, `python/hosihikari.py`, and `kotlin/hosihikari/`
 are copied from RpcLoader. Refresh them when the loader is upgraded.
@@ -38,7 +40,7 @@ are copied from RpcLoader. Refresh them when the loader is upgraded.
 The binding owns stdout: it carries only JSON-RPC frames, while stderr is text logging. Plugins use
 the context logging methods. The context exposes the data directory, package directory,
 configuration lookup, data writes, event publishing/subscribing, and timers. See the
-[out-of-process guide](https://hf.srcz.one/develop/authoring-rpc/).
+[out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).
 
 ## Licence
 
