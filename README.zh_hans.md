@@ -1,7 +1,7 @@
 # RpcPluginTemplate —— RPC 插件模板
 
 星光框架的进程外插件模板。RpcLoader 启动清单里的命令，通过行分隔 JSON-RPC 2.0 over stdio
-通信；卸载就是让子进程退出。每个目录都是一个完整的插件包，自带清单、绑定副本、配置与说明。
+通信；卸载就是让子进程退出。每个目录都是一个完整的插件包，自带清单、协议定义副本、配置与说明。
 
 ## 模板
 
@@ -29,12 +29,12 @@
 
 自持态载体用 `sk add hosihikari-hosting-selfhosted`，按平台选 Windows 或 Linux；通过 `hosihikari-server`（Windows 上是 `hosihikari-server.exe`）启动。加载器与插件仍然放在 `plugins/` 下。
 
-各模板中的 `hosihikari.mjs`、`hosihikari.py`、`hosihikari/` 来自 RpcLoader 的绑定目录；
+各模板中的 `hosihikari.mjs`、`hosihikari.py`、`hosihikari/` 来自 RpcLoader 的协议定义目录；
 升级 Loader 时同步更新。
 
 ## 协议
 
-绑定独占 stdout，只走 JSON-RPC 帧；stderr 是文本日志。插件日志请用上下文提供的日志方法。
+协议定义独占 stdout，只走 JSON-RPC 帧；stderr 是文本日志。插件日志请用上下文提供的日志方法。
 上下文提供数据目录、包目录、配置读取、数据写入、事件发布/订阅与定时器。见
 [进程外文档](https://hoshi.srcz.one/zh/framework/develop/authoring-rpc/)。
 

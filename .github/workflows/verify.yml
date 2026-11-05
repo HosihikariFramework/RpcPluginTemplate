@@ -53,7 +53,7 @@ jobs:
           }
           JS
 
-  bindings:
+  protocol:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -62,7 +62,7 @@ jobs:
         with:
           repository: HosihikariFramework/RpcLoader
           path: RpcLoader
-      - name: Compare binding copies
+      - name: Compare protocol definition copies
         run: |
           set -euo pipefail
           diff -u RpcLoader/protocol/node/hosihikari.mjs node-typescript/hosihikari.mjs

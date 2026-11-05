@@ -5,11 +5,11 @@ Kotlin/JVM packages that speak line-delimited JSON-RPC 2.0 over stdio.
 
 ## Repository map
 
-- `node-typescript/` — Node.js package, binding copy, build output.
-- `python/` — Python package and binding copy.
-- `kotlin/` — Kotlin/JVM package, binding copy, and build script.
+- `node-typescript/` — Node.js package, protocol definition copy, build output.
+- `python/` — Python package and protocol definition copy.
+- `kotlin/` — Kotlin/JVM package, protocol definition copy, and build script.
 - `.github/handshake.py` — loads each package through RpcLoader and checks the hello handshake.
-- `.github/workflows/verify.yml` — manifest, binding-drift, build, and handshake checks.
+- `.github/workflows/verify.yml` — manifest, protocol-drift, build, and handshake checks.
 
 ## Build and verify
 

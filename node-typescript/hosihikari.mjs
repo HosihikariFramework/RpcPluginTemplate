@@ -20,6 +20,7 @@ const notify = (method, params) => send({ jsonrpc: '2.0', method, params });
 let nextId = 1;
 const pending = new Map();
 const REQUEST_TIMEOUT_MS = 30000;
+const PROTOCOL_VERSION = 1;
 const handlers = new Map();
 const syncTopics = new Set();
 let plugin = null;
@@ -102,8 +103,11 @@ async function handle(message) {
   let result = null;
   switch (message.method) {
     case 'hosihikari/hello':
+      if ((message.params?.protocolVersion ?? 0) !== PROTOCOL_VERSION) {
+        throw new Error(`protocol version mismatch: binding ${PROTOCOL_VERSION}, host ${message.params?.protocolVersion}`);
+      }
       await load(message.params ?? {});
-      result = { name: ctx.name };
+      result = { name: ctx.name, protocolVersion: PROTOCOL_VERSION };
       break;
     case 'hosihikari/enable':
       result = normalize(await plugin?.onEnable?.(ctx));

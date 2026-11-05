@@ -2,7 +2,7 @@
 
 Out-of-process plugin templates for the Hosihikari framework. RpcLoader starts the command from
 `manifest.json` and speaks line-delimited JSON-RPC 2.0 over stdio; unloading means the child process
-exits. Each directory is a complete plugin package with its own manifest, binding copy,
+exits. Each directory is a complete plugin package with its own manifest, protocol definition,
 configuration, and README.
 
 ## Templates
@@ -37,7 +37,7 @@ are copied from RpcLoader. Refresh them when the loader is upgraded.
 
 ## Protocol
 
-The binding owns stdout: it carries only JSON-RPC frames, while stderr is text logging. Plugins use
+The protocol definition owns stdout: it carries only JSON-RPC frames, while stderr is text logging. Plugins use
 the context logging methods. The context exposes the data directory, package directory,
 configuration lookup, data writes, event publishing/subscribing, and timers. See the
 [out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).

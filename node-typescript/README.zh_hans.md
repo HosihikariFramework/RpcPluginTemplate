@@ -40,7 +40,7 @@ npm run build
 - `manifest.json` —— `loader: rpc`；`command` 是编码成字符串的 JSON 数组
   （`node ./hosihikari.mjs ./dist/main.js`）。
 - `src/main.ts` —— 插件本体；默认导出实现各钩子。
-- `hosihikari.d.ts` —— 绑定的上下文与钩子类型。
+- `hosihikari.d.ts` —— 协议定义的上下文与钩子类型。
 - `hosihikari.mjs` —— 从 RpcLoader 的 `protocol/node/` 拷来的 Node 协议定义；升级 Loader 时
   同步更新。
 - `tsconfig.json`、`package.json` —— TypeScript 构建配置。
