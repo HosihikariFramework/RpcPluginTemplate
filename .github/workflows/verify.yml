@@ -61,6 +61,8 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: HosihikariFramework/RpcLoader
+          # 配对的加载器 PR 分支：协议定义还没发布。
+          ref: fix/rules-and-exceptions
           path: RpcLoader
       - name: Compare protocol definition copies
         run: |
