@@ -76,8 +76,9 @@ function makeContext(params) {
         }
       };
     },
-    scheduleOnce: (ms, fn) => setTimeout(fn, ms),
-    schedulePeriodic: (ms, fn) => setInterval(fn, ms),
+    // 契约单位是秒；setTimeout 收毫秒（与 Python 绑定一致）。
+    scheduleOnce: (seconds, fn) => setTimeout(fn, seconds * 1000),
+    schedulePeriodic: (seconds, fn) => setInterval(fn, seconds * 1000),
   };
 }
 
