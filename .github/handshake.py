@@ -25,6 +25,7 @@ request = {
     "id": 1,
     "method": "hosihikari/hello",
     "params": {
+        "protocolVersion": 1,
         "name": expected,
         "dataDirectory": "./data",
         "packageDirectory": ".",
@@ -51,6 +52,8 @@ if "error" in response:
     raise SystemExit(f"binding error: {response['error']}")
 if response.get("result", {}).get("name") != expected:
     raise SystemExit(f"unexpected response: {response}")
+if response.get("result", {}).get("protocolVersion") != 1:
+    raise SystemExit(f"binding did not confirm the protocol version: {response}")
 
 process.stdin.close()
 process.wait(timeout=10)
