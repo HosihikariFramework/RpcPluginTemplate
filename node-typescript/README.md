@@ -42,8 +42,8 @@ For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Win
 - `manifest.json` — `loader: rpc`; `command` is a JSON array encoded as a string
   (`node ./hosihikari.mjs ./dist/main.js`).
 - `src/main.ts` — the plugin; the default export implements the hooks.
-- `hosihikari.d.ts` — context and hook types for the binding.
-- `hosihikari.mjs` — the Node binding copied from RpcLoader's `protocol/node/`. Refresh it when
+- `hosihikari.d.ts` — context and hook types for the protocol definition.
+- `hosihikari.mjs` — the Node protocol definition copied from RpcLoader's `protocol/node/`. Refresh it when
   the loader is upgraded.
 - `tsconfig.json`, `package.json` — TypeScript build configuration.
 - `MyNodePlugin.conf` — package defaults.

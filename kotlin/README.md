@@ -60,7 +60,7 @@ plugins should use `context.logInfo` / `context.logWarn` / `context.logError` fo
 Hooks return `HookResult.allow()` or `HookResult.refuse(reason)`. `Context` provides `name()`,
 `dataDirectory()`, `packageDirectory()`, `config(key)`, `configObject()`,
 `logInfo` / `logWarn` / `logError`, `writeData(file, text)`, `publish(topic, json)`,
-`subscribe(topic, handler[, sync])`, `scheduleOnce(millis, work)` and `schedulePeriodic(millis, work)`. See the
+`subscribe(topic, handler[, sync])`, `scheduleOnce(seconds, work)` and `schedulePeriodic(seconds, work)`. See the
 [out-of-process guide](https://hoshi.srcz.one/framework/develop/authoring-rpc/).
 
 ## Licence

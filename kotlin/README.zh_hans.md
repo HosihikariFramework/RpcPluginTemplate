@@ -59,7 +59,7 @@ Windows 上：
 钩子返回 `HookResult.allow()` 或 `HookResult.refuse(reason)`。`Context` 提供 `name()`、
 `dataDirectory()`、`packageDirectory()`、`config(key)`、`configObject()`、
 `logInfo` / `logWarn` / `logError`、`writeData(file, text)`、`publish(topic, json)`、
-`subscribe(topic, handler[, sync])`、`scheduleOnce(millis, work)` 与 `schedulePeriodic(millis, work)`。见
+`subscribe(topic, handler[, sync])`、`scheduleOnce(seconds, work)` 与 `schedulePeriodic(seconds, work)`。见
 [进程外文档](https://hoshi.srcz.one/zh/framework/develop/authoring-rpc/)。
 
 ## 许可
