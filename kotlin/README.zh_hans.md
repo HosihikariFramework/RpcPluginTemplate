@@ -1,6 +1,6 @@
 # RPC 插件模板 —— Kotlin/JVM 运行时
 
-星光框架的最小进程外 Kotlin 插件，运行在 JVM 上。RpcLoader 启动清单里的命令，通过行分隔
+星光框架的最小进程外 Kotlin 插件，运行在 JVM 上。RpcLoader 启动 `hosihikari.json` 里的 `pack.command`，通过行分隔
 JSON-RPC 2.0 over stdio 通信；卸载就是让子进程退出。
 
 ## 要求
@@ -25,11 +25,11 @@ Windows 上：
 
 ## 部署
 
-1. 把本目录复制到服务端，改名为 `plugins/MyKotlinPlugin/`。目录名必须与 `manifest.json` 的
+1. 把本目录复制到服务端，改名为 `plugins/MyKotlinPlugin/`。目录名必须与 `hosihikari.json` 的
    `name` 一致。
-2. 改 `manifest.json` 的 `name`，把 `MyKotlinPlugin.conf` 改成同名；调整布局时同步修改入口或
-   `extraInfo.command`，包括命令里的插件类名。
-3. 构建后用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
+2. 改 `hosihikari.json` 的 `name`，把 `MyKotlinPlugin.conf` 改成同名；调整布局时同步修改入口或
+   `pack.command`，包括命令里的插件类名。
+3. 构建并打包（`pwsh ./pack.ps1` 或 `bash ./pack.sh`）后用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
 
    ```powershell
    sk init                                  # 每个服务端根目录执行一次
@@ -43,8 +43,10 @@ Windows 上：
 
 ## 文件
 
-- `manifest.json` —— `loader: rpc`；`command` 是编码成字符串的 JSON 数组
-  （`java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin`）。
+- `hosihikari.json` —— `loader: rpc`；`pack.command` 是参数数组
+  （`java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin`）；`manifest.json`
+  信封由打包器生成。
+- `pack.ps1` / `pack.sh` —— 调框架打包器；`dist/MyKotlinPlugin/` 是可安装的包。
 - `src/MyKotlinPlugin.kt` —— 插件本体；实现 `hosihikari.Plugin`。
 - `hosihikari/` —— 从 RpcLoader 的 `protocol/java/hosihikari/` 拷来的 Java 协议定义；升级
   Loader 时同步更新。

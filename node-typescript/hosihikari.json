@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "name": "MyNodePlugin",
+  "version": "1.0.0",
+  "entry": "dist/main.js",
+  "loader": "rpc",
+  "kind": "plugin",
+  "apiVersion": 3,
+  "dependencies": [
+    { "name": "hosihikari" },
+    { "name": "hosihikari-rpc" }
+  ],
+  "description": "A minimal out-of-process Node.js/TypeScript plugin.",
+  "author": "you",
+  "pack": {
+    "command": [ "node", "./hosihikari.mjs", "./dist/main.js" ]
+  }
+}

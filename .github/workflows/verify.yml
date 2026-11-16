@@ -2,7 +2,7 @@ name: verify
 
 on:
   push:
-    branches: [main]
+    branches: [main, v2/manifest]
   pull_request:
 
 jobs:
@@ -38,12 +38,14 @@ jobs:
           };
 
           for (const [dir, expected] of Object.entries(templates)) {
-            const manifest = JSON.parse(fs.readFileSync(`${dir}/manifest.json`, 'utf8'));
+            if (fs.existsSync(`${dir}/manifest.json`)) throw new Error(`${dir}: committed manifest.json`);
+            const manifest = JSON.parse(fs.readFileSync(`${dir}/hosihikari.json`, 'utf8'));
             if (manifest.name !== expected.name) throw new Error(`${dir}: name`);
-            if (manifest.type !== 'hosihikari') throw new Error(`${dir}: type`);
+            if (manifest.kind !== 'plugin') throw new Error(`${dir}: kind`);
+            if (manifest.apiVersion !== 3) throw new Error(`${dir}: apiVersion`);
             if (!manifest.entry) throw new Error(`${dir}: entry`);
-            if (manifest.extraInfo?.loader !== 'rpc') throw new Error(`${dir}: loader`);
-            const command = JSON.parse(manifest.extraInfo.command);
+            if (manifest.loader !== 'rpc') throw new Error(`${dir}: loader`);
+            const command = manifest.pack?.command;
             if (JSON.stringify(command) !== JSON.stringify(expected.command)) {
               throw new Error(`${dir}: command ${JSON.stringify(command)}`);
             }
@@ -62,6 +64,7 @@ jobs:
         with:
           repository: HosihikariFramework/RpcLoader
           path: RpcLoader
+          ref: ${{ github.head_ref || github.ref_name }}
       - name: Compare protocol definition copies
         run: |
           set -euo pipefail
@@ -138,3 +141,63 @@ jobs:
           python3 "$GITHUB_WORKSPACE/.github/handshake.py" MyKotlinPlugin \
             java -cp ./plugin.jar hosihikari.Binding myplugin.MyKotlinPlugin
           test -f data/loaded.txt
+
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 模板
+        uses: actions/checkout@v7
+        with:
+          path: template
+
+      - name: 核心
+        uses: actions/checkout@v7
+        with:
+          repository: HosihikariFramework/PluginManager
+          path: PluginManager
+          # 跨仓并列检出必须钉同名分支（ADR-0059）。
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: 契约
+        uses: actions/checkout@v7
+        with:
+          repository: HosihikariFramework/PluginAbstractions
+          path: Hosihikari.Plugin.Abstractions
+
+      - name: McMaster fork
+        uses: actions/checkout@v7
+        with:
+          repository: HosihikariFramework/DotNetCorePlugins
+          path: DotNetCorePlugins
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+
+      - name: 打包
+        env:
+          HOSIHIKARI_PLUGINMANAGER: ${{ github.workspace }}/PluginManager
+        run: |
+          set -euo pipefail
+          (cd template/node-typescript && npm ci && npm run build)
+          for dir in node-typescript python kotlin; do
+            bash "template/$dir/pack.sh"
+          done
+
+      # 信封由打包器生成：type 是路由键，清单留在源码树外的输出里。
+      - name: 检查产物形状
+        run: |
+          set -euo pipefail
+          for pair in node-typescript:MyNodePlugin python:MyPythonPlugin kotlin:MyKotlinPlugin; do
+            dir=${pair%%:*}
+            name=${pair##*:}
+            package="template/$dir/dist/$name"
+            test -f "$package/hosihikari.json"
+            test "$(node -p "require('./$package/hosihikari.json').apiVersion")" = 3
+            test "$(node -p "require('./$package/manifest.json').type")" = hosihikari
+            test ! -f "template/$dir/manifest.json"
+          done
