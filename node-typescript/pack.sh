@@ -35,9 +35,13 @@ elif [ "${1:-}" = "--migrate-only" ]; then
 fi
 
 # 打包器拒绝输出目录与源目录相交；先复制到临时目录，排除仓库元数据与旧产物。
+# 这里的 dist/ 同时是 TypeScript 的构建输出（dist/main.js）与打包输出；只带它的文件，
+# 上次留下的包目录（dist/<名字>/）不带，否则每打一次就多嵌一层。
 stage=$(mktemp -d)
 trap 'rm -rf "$stage"' EXIT
-(cd "$here" && tar -cf - --exclude=.git --exclude=dist --exclude=data --exclude=bin --exclude=obj .) |
+(cd "$here" && tar -cf - --exclude=.git --exclude=data --exclude=bin --exclude=obj --exclude=dist .) |
     (cd "$stage" && tar -xf -)
+mkdir -p "$stage/dist"
+cp "$here"/dist/*.* "$stage/dist/"
 
 dotnet run --project "$tool" -c Release -- pack-plugin "$stage" "$here/hosihikari.json" "$here/dist"

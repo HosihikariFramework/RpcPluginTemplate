@@ -1,4 +1,4 @@
-# Pack this runtime package with the framework's packer. The packer writes the
+﻿# Pack this runtime package with the framework's packer. The packer writes the
 # LeviLamina manifest.json envelope next to hosihikari.json.
 #
 # A package still on the 1.x manifest.json migrates first, in the same command.
@@ -41,12 +41,17 @@ if ($MigrateOnly) {
 }
 
 # 打包器拒绝输出目录与源目录相交；先复制到临时目录，排除仓库元数据与旧产物。
+# 这里的 dist/ 同时是 TypeScript 的构建输出（dist/main.js）与打包输出；只带它的文件，
+# 上次留下的包目录（dist/<名字>/）不带，否则每打一次就多嵌一层。
 $stage = Join-Path $env:TEMP ("hosihikari-template-" + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force $stage | Out-Null
 try {
     Get-ChildItem -Force $here |
-        Where-Object { $_.Name -notin @('.git', 'dist', 'data', 'bin', 'obj') } |
+        Where-Object { $_.Name -notin @('.git', 'data', 'bin', 'obj', 'dist') } |
         Copy-Item -Destination $stage -Recurse -Force
+    $dist = Join-Path $stage 'dist'
+    New-Item -ItemType Directory -Force $dist | Out-Null
+    Get-ChildItem -Force (Join-Path $here 'dist') -File | Copy-Item -Destination $dist -Force
 
     dotnet run --project $tool -c Release -- pack-plugin $stage (Join-Path $here 'hosihikari.json') (Join-Path $here 'dist')
 } finally {
