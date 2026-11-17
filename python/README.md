@@ -10,12 +10,13 @@ Python 3.8 or newer on `PATH`. `pack.command` uses `python3`; on Windows change 
 
 ## Deploy
 
-1. Copy this directory into your server as `plugins/MyPythonPlugin/`. The directory name must equal
-   `hosihikari.json` `name`.
+1. Keep this directory outside the server while you work on it. The package directory name
+   must equal `hosihikari.json` `name`.
 2. Change `hosihikari.json` `name`, rename `MyPythonPlugin.conf` to match, and update the entry or
    `pack.command` if the layout changes.
-3. Pack (`pwsh ./pack.ps1` or `bash ./pack.sh`), install the carrier bundle and the RPC loader with
-   Seiko, then restart:
+3. Pack (`pwsh ./pack.ps1` or `bash ./pack.sh`), copy `dist/MyPythonPlugin/` into the server as
+   `plugins/MyPythonPlugin/`, install the carrier bundle and the RPC loader with Seiko, then
+   restart:
 
    ```powershell
    sk init                                  # once per server root

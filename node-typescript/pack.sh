@@ -43,8 +43,9 @@ trap 'rm -rf "$stage"' EXIT
     (cd "$stage" && tar -xf -)
 mkdir -p "$stage/dist"
 # 编译产物可能带子目录；只排除上次打包留下的 dist/<名字>/，否则每打一次就多嵌一层。
-# 名字从清单顶层键读（两格缩进），不借 node 解析路径：Git Bash 的 /c/... 进不了 require。
-package_name=$(sed -n 's/^  "name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$here/hosihikari.json" | head -1)
+# 名字交给 JSON 解析器读：缩进或单行写法都不该影响打包。相对路径进 require，
+# Git Bash 的 /c/... 绝对路径在 Windows 的 node 里解析不了。
+package_name=$(cd "$here" && node -p "require('./hosihikari.json').name")
 if [ -z "$package_name" ]; then
     echo "cannot read name from $here/hosihikari.json" >&2
     exit 1

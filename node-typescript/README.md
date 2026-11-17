@@ -21,12 +21,12 @@ type-checks without emitting.
 
 ## Deploy
 
-1. Copy this directory into your server as `plugins/MyNodePlugin/`. The directory name must equal
-   `hosihikari.json` `name`.
+1. Keep this directory outside the server while you work on it. The package directory name
+   must equal `hosihikari.json` `name`.
 2. Change `hosihikari.json` `name`, rename `MyNodePlugin.conf` to match, and update the entry or
    `pack.command` if the layout changes.
-3. Build and pack (`pwsh ./pack.ps1` or `bash ./pack.sh`), install the carrier bundle and the RPC
-   loader with Seiko, and restart:
+3. Build and pack (`pwsh ./pack.ps1` or `bash ./pack.sh`), copy `dist/MyNodePlugin/` into the server as
+   `plugins/MyNodePlugin/`, install the carrier bundle and the RPC loader with Seiko, and restart:
 
    ```powershell
    sk init                                  # once per server root

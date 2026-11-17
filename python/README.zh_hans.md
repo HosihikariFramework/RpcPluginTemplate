@@ -10,11 +10,10 @@ over stdio 通信；卸载就是让子进程退出。
 
 ## 部署
 
-1. 把本目录复制到服务端，改名为 `plugins/MyPythonPlugin/`。目录名必须与 `hosihikari.json` 的
-   `name` 一致。
+1. 在服务端之外改这个目录。包的目录名必须与 `hosihikari.json` 的 `name` 一致。
 2. 改 `hosihikari.json` 的 `name`，把 `MyPythonPlugin.conf` 改成同名；调整布局时同步修改入口或
    `pack.command`。
-3. 打包（`pwsh ./pack.ps1` 或 `bash ./pack.sh`）后用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
+3. 打包（`pwsh ./pack.ps1` 或 `bash ./pack.sh`），把 `dist/MyPythonPlugin/` 复制到服务端 `plugins/MyPythonPlugin/`，用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
 
    ```powershell
    sk init                                  # 每个服务端根目录执行一次
