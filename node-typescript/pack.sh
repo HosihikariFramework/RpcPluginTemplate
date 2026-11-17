@@ -39,8 +39,12 @@ fi
 # 上次留下的包目录（dist/<名字>/）不带，否则每打一次就多嵌一层。
 stage=$(mktemp -d)
 trap 'rm -rf "$stage"' EXIT
-(cd "$here" && tar --anchored -cf - --exclude='./.git' --exclude='./data' --exclude='./bin' --exclude='./obj' --exclude='./dist' .) |
-    (cd "$stage" && tar -xf -)
+# 只从暂存根挑条目：BSD tar 没有 --anchored，而裸 --exclude=bin 会把 node_modules 里的同名目录也裁掉。
+(cd "$here" && for entry in * .[!.]*; do
+    [ -e "$entry" ] || continue
+    case "$entry" in .git|dist|data|bin|obj) continue;; esac
+    printf '%s\n' "$entry"
+done | tar -cf - -T -) | (cd "$stage" && tar -xf -)
 mkdir -p "$stage/dist"
 # 编译产物可能带子目录；只排除上次打包留下的 dist/<名字>/，否则每打一次就多嵌一层。
 # 名字交给 JSON 解析器读：缩进或单行写法都不该影响打包。相对路径进 require，
@@ -50,7 +54,7 @@ if [ -z "$package_name" ]; then
     echo "cannot read name from $here/hosihikari.json" >&2
     exit 1
 fi
-(cd "$here/dist" && tar --anchored -cf - --exclude="./$package_name" .) |
-    (cd "$stage/dist" && tar -xf -)
+(cd "$here/dist" && tar -cf - .) | (cd "$stage/dist" && tar -xf -)
+rm -rf "$stage/dist/$package_name"
 
 dotnet run --project "$tool" -c Release -- pack-plugin "$stage" "$here/hosihikari.json" "$here/dist"
