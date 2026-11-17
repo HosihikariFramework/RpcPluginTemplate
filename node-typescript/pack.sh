@@ -42,6 +42,14 @@ trap 'rm -rf "$stage"' EXIT
 (cd "$here" && tar --anchored -cf - --exclude='./.git' --exclude='./data' --exclude='./bin' --exclude='./obj' --exclude='./dist' .) |
     (cd "$stage" && tar -xf -)
 mkdir -p "$stage/dist"
-cp "$here"/dist/*.* "$stage/dist/"
+# 编译产物可能带子目录；只排除上次打包留下的 dist/<名字>/，否则每打一次就多嵌一层。
+# 名字从清单顶层键读（两格缩进），不借 node 解析路径：Git Bash 的 /c/... 进不了 require。
+package_name=$(sed -n 's/^  "name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$here/hosihikari.json" | head -1)
+if [ -z "$package_name" ]; then
+    echo "cannot read name from $here/hosihikari.json" >&2
+    exit 1
+fi
+(cd "$here/dist" && tar --anchored -cf - --exclude="./$package_name" .) |
+    (cd "$stage/dist" && tar -xf -)
 
 dotnet run --project "$tool" -c Release -- pack-plugin "$stage" "$here/hosihikari.json" "$here/dist"

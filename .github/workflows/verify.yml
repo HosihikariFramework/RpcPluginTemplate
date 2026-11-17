@@ -180,15 +180,32 @@ jobs:
         with:
           node-version: '24.x'
 
+      # Kotlin 的入口 jar 由 build.sh 产出，打包脚本只搬现成的：干净检出里要先编出来。
+      - uses: actions/setup-java@v6
+        with:
+          distribution: graalvm-community
+          java-version: '25'
+
+      - name: Kotlin 编译器
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/kotlin.zip" \
+            https://github.com/JetBrains/kotlin/releases/download/v2.4.21/kotlin-compiler-2.4.21.zip
+          unzip -q "$RUNNER_TEMP/kotlin.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/kotlinc/bin" >> "$GITHUB_PATH"
+
       - name: 打包
         env:
           HOSIHIKARI_PLUGINMANAGER: ${{ github.workspace }}/PluginManager
         run: |
           set -euo pipefail
           (cd template/node-typescript && npm ci && npm run build)
+          (cd template/kotlin && ./build.sh)
+          test -f template/kotlin/plugin.jar
           for dir in node-typescript python kotlin; do
             bash "template/$dir/pack.sh"
           done
+          # 入口要在包里，光有元数据不算能跑。
+          test -f template/kotlin/dist/MyKotlinPlugin/plugin.jar
 
       # 信封由打包器生成：type 是路由键，清单留在源码树外的输出里。
       - name: 检查产物形状

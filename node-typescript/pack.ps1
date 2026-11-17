@@ -43,7 +43,8 @@ if ($MigrateOnly) {
 # 打包器拒绝输出目录与源目录相交；先复制到临时目录，排除仓库元数据与旧产物。
 # 这里的 dist/ 同时是 TypeScript 的构建输出（dist/main.js）与打包输出；只带它的文件，
 # 上次留下的包目录（dist/<名字>/）不带，否则每打一次就多嵌一层。
-$stage = Join-Path $env:TEMP ("hosihikari-template-" + [guid]::NewGuid().ToString('N'))
+# TEMP 是 Windows 的形状；Linux / macOS 上按平台解析临时目录。
+$stage = Join-Path ([System.IO.Path]::GetTempPath()) ("hosihikari-template-" + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force $stage | Out-Null
 try {
     Get-ChildItem -Force $here |
@@ -51,9 +52,15 @@ try {
         Copy-Item -Destination $stage -Recurse -Force
     $dist = Join-Path $stage 'dist'
     New-Item -ItemType Directory -Force $dist | Out-Null
-    Get-ChildItem -Force (Join-Path $here 'dist') -File | Copy-Item -Destination $dist -Force
+    # 编译产物可能带子目录；只排除上次打包留下的 dist/<名字>/，否则每打一次就多嵌一层。
+    $packageName = (Get-Content (Join-Path $here 'hosihikari.json') -Raw | ConvertFrom-Json).name
+    Get-ChildItem -Force (Join-Path $here 'dist') |
+        Where-Object { $_.Name -ne $packageName } |
+        Copy-Item -Destination $dist -Recurse -Force
 
     dotnet run --project $tool -c Release -- pack-plugin $stage (Join-Path $here 'hosihikari.json') (Join-Path $here 'dist')
+    # 原生命令非零退出不会自己抛：PowerShell 默认不把 $LASTEXITCODE 当错误。
+    if ($LASTEXITCODE -ne 0) { throw 'the packer failed' }
 } finally {
     if (Test-Path $stage) {
         Remove-Item -Recurse -Force $stage -ErrorAction SilentlyContinue
