@@ -1,7 +1,7 @@
 # RpcPluginTemplate — RPC plugin templates
 
-Out-of-process plugin templates for the Hosihikari framework. RpcLoader starts the command from
-`manifest.json` and speaks line-delimited JSON-RPC 2.0 over stdio; unloading means the child process
+Out-of-process plugin templates for the Hosihikari framework. RpcLoader starts `pack.command` from
+`hosihikari.json` and speaks line-delimited JSON-RPC 2.0 over stdio; unloading means the child process
 exits. Each directory is a complete plugin package with its own manifest, protocol definition,
 configuration, and README.
 
@@ -14,11 +14,11 @@ configuration, and README.
 ## Using a template
 
 1. Copy the runtime directory into your server as `plugins/<PluginName>/`; the directory name must
-   match `name` in `manifest.json`.
-2. Rename the plugin in `manifest.json`, rename the `.conf` file to match, and adjust the entry or
-   `extraInfo.command` when you change the layout.
-3. Build the plugin where the runtime requires it, then install the carrier bundle and the
-   RPC loader with Seiko:
+   match `name` in `hosihikari.json`.
+2. Rename the plugin in `hosihikari.json`, rename the `.conf` file to match, and adjust the entry or
+   `pack.command` when you change the layout.
+3. Build the plugin where the runtime requires it, pack it (`pwsh ./pack.ps1` or `bash ./pack.sh` in
+   the runtime directory), then install the carrier bundle and the RPC loader with Seiko:
 
    ```powershell
    sk init                                  # once per server root
@@ -33,7 +33,16 @@ configuration, and README.
 For the self-hosted carriers, `sk add hosihikari-hosting-selfhosted` selects Windows or Linux; start the server through `hosihikari-server` (`hosihikari-server.exe` on Windows). Loaders and plugins still live under `plugins/`.
 
 The protocol definitions under `node-typescript/hosihikari.mjs`, `python/hosihikari.py`, and `kotlin/hosihikari/`
-are copied from RpcLoader. Refresh them when the loader is upgraded.
+are copied from RpcLoader. Refresh them when the loader is upgraded; they must match
+`protocol/` in the loader repository byte for byte.
+
+`hosihikari.json` is the only manifest in the source tree. The packer generates the LeviLamina
+`manifest.json` envelope from it, so a generated copy left in the package directory is an output.
+A package still on the 1.x `manifest.json` migrates in the same `pack` command; `pack.ps1 -MigrateOnly`
+(`pack.sh --migrate-only`) rewrites just the metadata.
+
+Hooks may be async. `undefined` / `true` allow; `false` or `{ allowed: false, diagnostic: { code, severity, message } }`
+refuse; a thrown exception is a fault.
 
 ## Protocol
 

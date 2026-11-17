@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "name": "MyKotlinPlugin",
+  "version": "1.0.0",
+  "entry": "plugin.jar",
+  "loader": "rpc",
+  "kind": "plugin",
+  "apiVersion": 3,
+  "dependencies": [
+    { "name": "hosihikari" },
+    { "name": "hosihikari-rpc" }
+  ],
+  "description": "A minimal out-of-process Kotlin/JVM plugin.",
+  "author": "you",
+  "pack": {
+    "command": [ "java", "-cp", "./plugin.jar", "hosihikari.Binding", "myplugin.MyKotlinPlugin" ]
+  }
+}

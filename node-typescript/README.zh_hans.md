@@ -1,6 +1,6 @@
 # RPC 插件模板 —— Node.js/TypeScript 运行时
 
-星光框架的最小进程外 Node 插件，用 TypeScript 编写。RpcLoader 启动清单里的命令，通过行分隔
+星光框架的最小进程外 Node 插件，用 TypeScript 编写。RpcLoader 启动 `hosihikari.json` 里的 `pack.command`，通过行分隔
 JSON-RPC 2.0 over stdio 通信；卸载就是让子进程退出。
 
 ## 要求
@@ -15,15 +15,14 @@ npm install
 npm run build
 ```
 
-构建产物是 `dist/main.js`，也就是清单命令运行的入口。`npm run check` 只做类型检查，不产出文件。
+构建产物是 `dist/main.js`，也就是 `pack.command` 运行的入口。`npm run check` 只做类型检查，不产出文件。
 
 ## 部署
 
-1. 把本目录复制到服务端，改名为 `plugins/MyNodePlugin/`。目录名必须与 `manifest.json` 的
-   `name` 一致。
-2. 改 `manifest.json` 的 `name`，把 `MyNodePlugin.conf` 改成同名；调整布局时同步修改入口或
-   `extraInfo.command`。
-3. 构建后用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
+1. 在服务端之外改这个目录。包的目录名必须与 `hosihikari.json` 的 `name` 一致。
+2. 改 `hosihikari.json` 的 `name`，把 `MyNodePlugin.conf` 改成同名；调整布局时同步修改入口或
+   `pack.command`。
+3. 构建并打包（`pwsh ./pack.ps1` 或 `bash ./pack.sh`），把 `dist/MyNodePlugin/` 复制到服务端 `plugins/MyNodePlugin/`，用 Seiko 安装载体 bundle 与 RPC Loader，再重启：
 
    ```powershell
    sk init                                  # 每个服务端根目录执行一次
@@ -37,8 +36,9 @@ npm run build
 
 ## 文件
 
-- `manifest.json` —— `loader: rpc`；`command` 是编码成字符串的 JSON 数组
-  （`node ./hosihikari.mjs ./dist/main.js`）。
+- `hosihikari.json` —— `loader: rpc`；`pack.command` 是参数数组
+  （`node ./hosihikari.mjs ./dist/main.js`）；`manifest.json` 信封由打包器生成。
+- `pack.ps1` / `pack.sh` —— 调框架打包器；`dist/MyNodePlugin/` 是可安装的包。
 - `src/main.ts` —— 插件本体；默认导出实现各钩子。
 - `hosihikari.d.ts` —— 协议定义的上下文与钩子类型。
 - `hosihikari.mjs` —— 从 RpcLoader 的 `protocol/node/` 拷来的 Node 协议定义；升级 Loader 时
@@ -50,6 +50,9 @@ npm run build
 
 `hosihikari.mjs` 独占 stdout，只走 JSON-RPC 帧。`console.log` 已被改道 stderr；插件日志请用
 `ctx.logInfo` / `ctx.logWarn` / `ctx.logError`。
+
+钩子可以 async。`undefined` / `true` 允许；`false` 或
+`{ allowed: false, diagnostic: { code, severity, message } }` 拒绝；抛异常是故障。
 
 上下文提供数据目录、包目录、配置读取、数据写入、事件发布/订阅与定时器。见
 [进程外文档](https://hoshi.srcz.one/zh/framework/develop/authoring-rpc/)。

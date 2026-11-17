@@ -1,7 +1,8 @@
 # RpcPluginTemplate —— RPC 插件模板
 
-星光框架的进程外插件模板。RpcLoader 启动清单里的命令，通过行分隔 JSON-RPC 2.0 over stdio
-通信；卸载就是让子进程退出。每个目录都是一个完整的插件包，自带清单、协议定义副本、配置与说明。
+星光框架的进程外插件模板。RpcLoader 启动 `hosihikari.json` 里的 `pack.command`，通过行分隔
+JSON-RPC 2.0 over stdio 通信；卸载就是让子进程退出。每个目录都是一个完整的插件包，自带清单、
+协议定义副本、配置与说明。
 
 ## 模板
 
@@ -11,11 +12,12 @@
 
 ## 使用
 
-1. 把所选运行时目录复制到服务端，改名为 `plugins/<插件名>/`；目录名必须与 `manifest.json`
+1. 把所选运行时目录复制到服务端，改名为 `plugins/<插件名>/`；目录名必须与 `hosihikari.json`
    里的 `name` 一致。
-2. 改 `manifest.json` 的 `name`，把 `.conf` 文件改成同名；调整布局时同步修改入口或
-   `extraInfo.command`。
-3. 需要构建的运行时先构建，然后用 Seiko 安装载体 bundle 与 RPC Loader：
+2. 改 `hosihikari.json` 的 `name`，把 `.conf` 文件改成同名；调整布局时同步修改入口或
+   `pack.command`。
+3. 需要构建的运行时先构建，在运行时目录里打包（`pwsh ./pack.ps1` 或 `bash ./pack.sh`），
+   然后用 Seiko 安装载体 bundle 与 RPC Loader：
 
    ```powershell
    sk init                                  # 每个服务端根目录执行一次
@@ -30,7 +32,14 @@
 自持态载体用 `sk add hosihikari-hosting-selfhosted`，按平台选 Windows 或 Linux；通过 `hosihikari-server`（Windows 上是 `hosihikari-server.exe`）启动。加载器与插件仍然放在 `plugins/` 下。
 
 各模板中的 `hosihikari.mjs`、`hosihikari.py`、`hosihikari/` 来自 RpcLoader 的协议定义目录；
-升级 Loader 时同步更新。
+升级 Loader 时同步更新，必须与加载器仓的 `protocol/` 逐字一致。
+
+源码树里只有 `hosihikari.json` 这一份清单；父级的 `manifest.json` 信封由打包器生成，包目录里
+留下的那份是产物。还停在 1.x `manifest.json` 的包会在同一条打包命令里迁移；`pack.ps1 -MigrateOnly`
+（`pack.sh --migrate-only`）只重写元数据。
+
+钩子可以 async。`undefined` / `true` 允许；`false` 或
+`{ allowed: false, diagnostic: { code, severity, message } }` 拒绝；抛异常是故障。
 
 ## 协议
 
