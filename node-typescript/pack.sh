@@ -39,7 +39,7 @@ fi
 # 上次留下的包目录（dist/<名字>/）不带，否则每打一次就多嵌一层。
 stage=$(mktemp -d)
 trap 'rm -rf "$stage"' EXIT
-(cd "$here" && tar -cf - --exclude=.git --exclude=data --exclude=bin --exclude=obj --exclude=dist .) |
+(cd "$here" && tar --anchored -cf - --exclude='./.git' --exclude='./data' --exclude='./bin' --exclude='./obj' --exclude='./dist' .) |
     (cd "$stage" && tar -xf -)
 mkdir -p "$stage/dist"
 cp "$here"/dist/*.* "$stage/dist/"
