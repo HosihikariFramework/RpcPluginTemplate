@@ -64,7 +64,7 @@ jobs:
         with:
           repository: HosihikariFramework/RpcLoader
           path: RpcLoader
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ github.head_ref == 'v2' && 'v2' || github.base_ref || github.ref_name }}
       - name: Compare protocol definition copies
         run: |
           set -euo pipefail
@@ -155,8 +155,8 @@ jobs:
         with:
           repository: HosihikariFramework/PluginManager
           path: PluginManager
-          # 跨仓并列检出必须钉同名分支（ADR-0059）。
-          ref: ${{ github.head_ref || github.ref_name }}
+          # 跨仓并列检出：v2 期钉同名分支，其余跟 PR 目标分支（ADR-0059）。
+          ref: ${{ github.head_ref == 'v2' && 'v2' || github.base_ref || github.ref_name }}
 
       - name: 契约
         uses: actions/checkout@v7
@@ -164,7 +164,7 @@ jobs:
           # 核心按 ../Plugin.Abstractions 找契约源码（ADR-0059 的并列约定），目录名必须对上。
           repository: HosihikariFramework/PluginAbstractions
           path: Plugin.Abstractions
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ github.head_ref == 'v2' && 'v2' || github.base_ref || github.ref_name }}
 
       - name: McMaster fork
         uses: actions/checkout@v7
