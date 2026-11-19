@@ -23,7 +23,7 @@ if (-not (Test-Path $tool)) {
         'or set HOSIHIKARI_PLUGINMANAGER.') -f $tool
 }
 
-# 旧包在包根上还留着 manifest.json；migrate 就地换掉（ADR-0058）。
+# 旧包在包根上还留着 manifest.json；migrate 就地换掉（FX-0058）。
 if (Test-Path (Join-Path $here 'manifest.json')) {
     if (Test-Path (Join-Path $here 'hosihikari.json')) {
         throw 'manifest.json and hosihikari.json both exist; delete the stale manifest.json first'

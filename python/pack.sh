@@ -17,7 +17,7 @@ if [ ! -f "$tool" ]; then
     exit 1
 fi
 
-# 旧包在包根上还留着 manifest.json；migrate 就地换掉（ADR-0058）。
+# 旧包在包根上还留着 manifest.json；migrate 就地换掉（FX-0058）。
 if [ -f "$here/manifest.json" ]; then
     if [ -f "$here/hosihikari.json" ]; then
         echo 'manifest.json and hosihikari.json both exist; delete the stale manifest.json first' >&2
