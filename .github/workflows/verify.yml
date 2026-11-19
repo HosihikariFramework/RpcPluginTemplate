@@ -161,7 +161,7 @@ jobs:
       - name: 契约
         uses: actions/checkout@v7
         with:
-          # 核心按 ../Plugin.Abstractions 找契约源码（ADR-0059 的并列约定），目录名必须对上。
+          # 核心按 ../Plugin.Abstractions 找契约源码（FX-0059 的并列约定），目录名必须对上。
           repository: HosihikariFramework/PluginAbstractions
           path: Plugin.Abstractions
           ref: ${{ github.base_ref || github.ref_name }}
