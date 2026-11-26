@@ -6,13 +6,35 @@ on:
   pull_request:
 
 jobs:
+  format:
+    name: 格式
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # 仓里的配置文件与 FormatterConfig 逐字节相同，是标准；漂了就停下并打印 diff。
+      - name: 空白
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(git ls-files)
+          fail=0
+          for f in "${files[@]}"; do
+            [ -s "$f" ] || continue
+            if [ -n "$(tail -c 1 "$f")" ]; then
+              echo "$f: 文件末尾缺换行"; fail=1
+            fi
+            if sed 's/\r$//' "$f" | grep -qE '[[:space:]]+$'; then
+              echo "$f: 有行尾空白"; fail=1
+            fi
+          done
+          exit "$fail"
   manifests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          node-version: "24.x"
       - name: Check manifests and sources
         run: |
           set -euo pipefail
@@ -80,7 +102,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          node-version: "24.x"
       - name: Build
         working-directory: node-typescript
         run: |
@@ -119,7 +141,7 @@ jobs:
       - uses: actions/setup-java@v6
         with:
           distribution: graalvm-community
-          java-version: '25'
+          java-version: "25"
       - name: Install Kotlin compiler
         run: |
           set -euo pipefail
@@ -174,17 +196,17 @@ jobs:
 
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: "10.0.x"
 
       - uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          node-version: "24.x"
 
       # Kotlin 的入口 jar 由 build.sh 产出，打包脚本只搬现成的：干净检出里要先编出来。
       - uses: actions/setup-java@v6
         with:
           distribution: graalvm-community
-          java-version: '25'
+          java-version: "25"
 
       - name: Kotlin 编译器
         run: |
